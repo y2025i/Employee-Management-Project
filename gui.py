@@ -47,20 +47,20 @@ class EmployeeAppUI:
 
                     ui.label('Employee Details').classes('text-2xl font-bold mb-3 text-gray-800')
 
-                    ui.input("Employee's ID").classes('w-full mb-2')
-                    ui.input('Full Name').classes('w-full mb-2')
-                    ui.input('Address').classes('w-full mb-2')
-                    ui.input('Department').classes('w-full mb-2')
-                    ui.input('Position').classes('w-full mb-2')
-                    ui.input('Salary').classes('w-full mb-2')
+                    self.employee_id=ui.input("Emplotee's ID").classes("w-full mb-2").props('readonly placeholder="Select from table"')
+                    self.name=ui.input("Full Name").classes("w-full mb-2")
+                    self.Address=ui.input("Address").classes("w-full mb-2")
+                    self.department =ui.input('Department').classes('w-full mb-2') #add list
+                    self.position=ui.input('Position').classes('w-full mb-2') #add select from list
+                    self.salary=ui.input('Salary').classes('w-full mb-2')
 
                     with ui.row().classes('w-full gap-2 mt-4'):
-                        ui.button('Add').props('color=green').classes('flex-1')
-                        ui.button('Update').props('color=blue').classes('flex-1')
+                        ui.button('Add',on_click=self.handle_add).props('color=green').classes('flex-1')
+                        ui.button('Update', on_click=self.handle_update).props('color=blue').classes('flex-1')
 
                     with ui.row().classes('w-full gap-2 mt-2'):
-                        ui.button('Delete').props('color=red').classes('flex-1')
-                        ui.button('Clear').props('color=grey').classes('flex-1')
+                        ui.button('Delete Selected',on_click=self.handle_delete).props('color=red').classes('flex-1')
+                        ui.button('Clear',on_click=self.clear_form).props('color=grey').classes('flex-1')
 
                 # EMPLOYEE RECORDS
                 with ui.card().classes('shadow-2 flex-1').style('background-color: #EAF2F2; min-height: 560px; max-width: 800px;'):
@@ -74,6 +74,11 @@ class EmployeeAppUI:
                         self.search_val=ui.input('Search value', on_change=self.handle_search).classes('flex-1')
                         ui.button("Search",on_click=lambda: self.handle_search(self.search_val)).props("color=blue")
                         ui.button("Show All",on_click=self.refresh_ui).props("color=gray")
+
+
+
+
+
 
                         ui.select(
                             ['ID', 'Name'],
@@ -101,5 +106,5 @@ class EmployeeAppUI:
                     ).classes('w-full bg-white')
 
 
-app = EmployeeApp()
+app = EmployeeAppUI()
 ui.run(title='Employee Management System')
