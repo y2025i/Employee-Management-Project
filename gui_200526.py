@@ -1,8 +1,14 @@
 from nicegui import ui
 
 
-class EmployeeApp:
-    def __init__(self) -> None:
+class EmployeeAppUI:
+    def __init__(self,add_callback,get_callback,delete_callback,search_callback,stats_callback) -> None:
+        
+        
+        
+        
+        
+        
         self.build_ui()
 
     def build_ui(self) -> None:
