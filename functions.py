@@ -6,3 +6,18 @@
             self.position.options = []
         self.position.value = None
         self.position.update()
+#additional function
+
+ def handle_table_select(self, e) -> None:
+        selected = self.table.selected
+        if selected:
+            row = selected[0]
+            self.employee_id.value = str(row['id'])
+            self.name.value = row['name']
+            self.address.value = row['address']
+            self.department.value = row['department']
+            if row['department'] in self.dept_positions:
+                self.position.options = self.dept_positions[row['department']]
+            self.position.value = row['position']
+            self.salary.value = str(row['salary'])
+
