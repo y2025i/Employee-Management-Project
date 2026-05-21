@@ -21,3 +21,12 @@
             self.position.value = row['position']
             self.salary.value = str(row['salary'])
 
+
+def refresh_ui(self):
+        self.table.rows = self.get_callback()
+        self.table.update()
+        stats = self.stats_callback()
+        self.stat_total.text = str(stats['total'])
+        self.stat_avg.text = f"${stats['avg_salary']}"
+        self.stat_dept.text = stats['top_dept']
+        self.search_val.value = "
