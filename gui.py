@@ -2,12 +2,13 @@ from nicegui import ui
 
 
 class EmployeeAppUI:
-    def __init__(self,add_callback,get_callback,delete_callback,search_callback,stats_callback) -> None:
+    def __init__(self, add_callback, get_callback, delete_callback, search_callback, stats_callback, update_callback) -> None:
         self.add_callback=add_callback
         self.get_callback=get_callback
         self.search_callback=search_callback
         self.delete_callback=delete_callback
         self.stats_callback=stats_callback
+        self.update_callback=update_callback
 
         #departments and Positions 
         self.dept_positions = {
@@ -18,11 +19,10 @@ class EmployeeAppUI:
             "Sales": ["Sales Representative", "Sales Manager"],
             "Operations": ["Operations Coordinator"],
             "Management": ["Director", "CEO"]
-                                            }
-        
-        
-        
+                                            }       
         self.build_ui()
+
+
 
     def build_ui(self) -> None:
         ui.query('body').style('margin: 0; background-color: #F5F7F7;')
@@ -71,8 +71,7 @@ class EmployeeAppUI:
                 # EMPLOYEE RECORDS
                 with ui.card().classes('shadow-2 flex-1').style('background-color: #EAF2F2; min-height: 560px; max-width: 800px;'):
 
-                    ui.label('Employee Records') \
-                        .classes('text-2xl font-bold mb-3 text-gray-800')
+                    ui.label('Employee Records').classes('text-2xl font-bold mb-3 text-gray-800')
 
                     # SEARCH BAR
                     with ui.row().classes('w-full bg-white p-3 rounded items-center gap-3 mb-4'):
@@ -82,33 +81,6 @@ class EmployeeAppUI:
                         ui.button("Show All",on_click=self.refresh_ui).props("color=gray")
                     
 
-                    #table
-                    columns=[{"name":"id","label":"ID","field":"id","dortable":True}, #id
-                             {"name":"id","label":"ID","field":"id","dortable":True}, #name
-                             {"name":"id","label":"ID","field":"id","dortable":True}, #address
-                             {"name":"id","label":"ID","field":"id","dortable":True}, #department
-                             {"name":"id","label":"ID","field":"id","dortable":True}, #position
-                             {"name":"id","label":"ID","field":"id","dortable":True}
-                     ] #salary
-                    
-                    #
-                    self.table =ui.table(columns=columns,row=self.get_callback(),row_key="id",selection="single").classes("w-full bg-white").on("selection,self.handle_table_select")
-                             
-#here will be the functions. 
-
-
-
-
-
-                        ui.select(
-                            ['ID', 'Name'],
-                            value='ID',
-                            label='Search by'
-                        ).classes('w-40')
-
-                        ui.button('Search').props('color=blue')
-                        ui.button('Show All').props('color=grey')
-
                     # TABLE
                     columns = [
                         {'name': 'id', 'label': 'ID', 'field': 'id'},
@@ -117,13 +89,14 @@ class EmployeeAppUI:
                         {'name': 'department', 'label': 'Department', 'field': 'department'},
                         {'name': 'position', 'label': 'Position', 'field': 'position'},
                         {'name': 'salary', 'label': 'Salary', 'field': 'salary'},
-                    ]
+                    ]            
 
-                    ui.table(
-                        columns=columns,
-                        rows=[],
-                        row_key='id',
-                    ).classes('w-full bg-white')
+
+
+                    self.table =ui.table(columns=columns,row=self.get_callback(),row_key="id",selection="single").classes("w-full bg-white").on("selection,self.handle_table_select")
+                             
+#here will be the functions. 
+
 
 
 app = EmployeeAppUI()
