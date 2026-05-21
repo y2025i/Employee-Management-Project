@@ -30,3 +30,28 @@ def refresh_ui(self):
         self.stat_avg.text = f"${stats['avg_salary']}"
         self.stat_dept.text = stats['top_dept']
         self.search_val.value = "
+        
+
+
+  def handle_add(self):
+        if not self.name.value:
+            ui.notify('Name is required!', color='red')
+            return
+        if self.salary.value not in (None, ""):
+            try:
+                float(self.salary.value)
+            except ValueError:
+                ui.notify('Salary must be a numeric value!', color='red')
+                return
+
+        formatted_name = self.name.value.strip().title()
+        dept_val = self.department.value if self.department.value else ""
+        pos_val = self.position.value if self.position.value else ""
+        address_val = self.address.value if self.address.value else ""
+
+        success = self.add_callback(formatted_name, address_val, dept_val, pos_val, self.salary.value)
+        if success:
+            self.refresh_ui()
+            ui.notify('Employee added successfully!', color='green')
+            self.clear_form()
+
