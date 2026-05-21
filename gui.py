@@ -10,9 +10,15 @@ class EmployeeAppUI:
         self.stats_callback=stats_callback
 
         #departments and Positions 
-        self.dept_positions={"IT":["a","b,","c"],
-                             "Human Resoruces":["d","e,","k"] #add new positions and departments
-                             }
+        self.dept_positions = {
+            "IT": ["Software Engineer", "Data Analyst", "System Admin"],
+            "Human Resources": ["HR Specialist", "Recruiter", "HR Manager"],
+            "Finance": ["Financial Analyst", "Accountant", "Finance Manager"],
+            "Marketing": ["Marketing Executive", "SEO Specialist"],
+            "Sales": ["Sales Representative", "Sales Manager"],
+            "Operations": ["Operations Coordinator"],
+            "Management": ["Director", "CEO"]
+                                            }
         
         
         
@@ -50,8 +56,8 @@ class EmployeeAppUI:
                     self.employee_id=ui.input("Emplotee's ID").classes("w-full mb-2").props('readonly placeholder="Select from table"')
                     self.name=ui.input("Full Name").classes("w-full mb-2")
                     self.Address=ui.input("Address").classes("w-full mb-2")
-                    self.department =ui.input('Department').classes('w-full mb-2') #add list
-                    self.position=ui.input('Position').classes('w-full mb-2') #add select from list
+                    self.department =ui.select(list(self.dept_positions.keys()), label='Department',on_change=self.update_positions).classes("w-full mb-2")
+                    self.position=ui.select([],label='Position').classes('w-full mb-2') #add select from list
                     self.salary=ui.input('Salary').classes('w-full mb-2')
 
                     with ui.row().classes('w-full gap-2 mt-4'):
@@ -74,7 +80,21 @@ class EmployeeAppUI:
                         self.search_val=ui.input('Search value', on_change=self.handle_search).classes('flex-1')
                         ui.button("Search",on_click=lambda: self.handle_search(self.search_val)).props("color=blue")
                         ui.button("Show All",on_click=self.refresh_ui).props("color=gray")
+                    
 
+                    #table
+                    columns=[{"name":"id","label":"ID","field":"id","dortable":True}, #id
+                             {"name":"id","label":"ID","field":"id","dortable":True}, #name
+                             {"name":"id","label":"ID","field":"id","dortable":True}, #address
+                             {"name":"id","label":"ID","field":"id","dortable":True}, #department
+                             {"name":"id","label":"ID","field":"id","dortable":True}, #position
+                             {"name":"id","label":"ID","field":"id","dortable":True}
+                     ] #salary
+                    
+                    #
+                    self.table =ui.table(columns=columns,row=self.get_callback(),row_key="id",selection="single").classes("w-full bg-white").on("selection,self.handle_table_select")
+                             
+#here will be the functions. 
 
 
 
