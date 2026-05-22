@@ -2,7 +2,7 @@ from nicegui import ui
 from gui import EmployeeAppUI
 import database
 
-# Veritabanını başlat
+# Start Database
 database.init_db()
 
 def add_employee_to_db(name, address, dept, pos, salary):
@@ -24,7 +24,7 @@ def get_application_stats():
 def update_employee_in_db(emp_id, name, address, dept, pos, salary):
     return database.update_employee(emp_id, name, address, dept, pos, salary)
 
-# Çoklu tarayıcı sekme izolasyonu (Hocanın kritik kuralı)
+
 @ui.page('/')
 def main_page():
     EmployeeAppUI(
