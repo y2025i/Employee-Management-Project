@@ -29,7 +29,7 @@ def refresh_ui(self):
         self.stat_total.text = str(stats['total'])
         self.stat_avg.text = f"${stats['avg_salary']}"
         self.stat_dept.text = stats['top_dept']
-        self.search_val.value = "
+        self.search_val.value = ""
         
 
 
