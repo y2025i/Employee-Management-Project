@@ -1,4 +1,4 @@
- def update_positions(self, event):
+def update_positions(self, event):
         selected = event.value
         if selected:
             self.position.options = self.dept_positions[selected]
@@ -8,7 +8,7 @@
         self.position.update()
 #additional function
 
- def handle_table_select(self, e) -> None:
+def handle_table_select(self, e) -> None:
         selected = self.table.selected
         if selected:
             row = selected[0]
@@ -33,9 +33,9 @@ def refresh_ui(self):
         
 
 
-  def handle_add(self):
+def handle_add(self):
         if not self.name.value:
-            ui.notify('Name is required!', color='red')
+            department.notify('Name is required!', color='red')
             return
         if self.salary.value not in (None, ""):
             try:
@@ -55,7 +55,7 @@ def refresh_ui(self):
             ui.notify('Employee added successfully!', color='green')
             self.clear_form()
              #Update Functions
-    def handle_update(self):
+def handle_update(self):
         if not self.employee_id.value:
             ui.notify('Please select an employee from the table to update!', color='warning')
             return
@@ -83,7 +83,7 @@ def refresh_ui(self):
         else:
             ui.notify('Failed to update employee.', color='red')
 
-    def handle_search(self, e):
+def handle_search(self, e):
         query = e.value if hasattr(e, 'value') else e
         if not query:
             self.table.rows = self.get_callback()
@@ -91,7 +91,7 @@ def refresh_ui(self):
             self.table.rows = self.search_callback(query)
         self.table.update()
 
-    def handle_delete(self):
+def handle_delete(self):
         selected = self.table.selected
         if not selected:
             ui.notify('Please select an employee from the table first!', color='warning')
@@ -104,7 +104,7 @@ def refresh_ui(self):
             ui.notify(f'Employee {emp_id} deleted.', color='green')
             self.clear_form()
 
-    def clear_form(self) -> None:
+def clear_form(self) -> None:
         self.employee_id.value = ''
         self.name.value = ''
         self.address.value = ''

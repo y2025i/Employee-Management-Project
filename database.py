@@ -106,25 +106,25 @@ class Employee(SQLModel,table=True):
     id:Optional[int]=Field(default=None,primary_key=True)
     name:str
     address:Optional[str]=None
-    depatment:Optional[str]=None
+    department:Optional[str]=None
     position:Optional[str]=None
     salary:Optional[float]=None
 
 
 
-    class DatabaseConnection:
-        _instance=None
+class DatabaseConnection:
+    _instance=None
         
 
-        def __new__(cls):
-            if cls._instance is None:
-                cls._instance = super().__new__(cls) #DatabaseConnection,cls
-                cls._instance.engine=create_engine("sqlite:///employees.db",echo=False)
-                SQLModel.metadata.create_all(cls._instance.engine)
-                return cls._instance
-    db=DatabaseConnection()
-    def init_db() -> None:
-        SQLModel.metadata.create_all(db.engine)
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls) #DatabaseConnection,cls
+            cls._instance.engine=create_engine("sqlite:///employees.db",echo=False)
+            SQLModel.metadata.create_all(cls._instance.engine)
+        return cls._instance
+db=DatabaseConnection()
+def init_db() -> None:
+    SQLModel.metadata.create_all(db.engine)
 
 def add_employee(name: str, address: str, department: str, position: str, salary: str) -> bool:
     try:
@@ -153,7 +153,7 @@ def get_all_employees() -> List[Dict[str, Any]]:
             for row in rows
         ]
 
-# ADVANCED: Seçilen Personeli Güncelleme Fonksiyonu
+#Update
 def update_employee(emp_id: str, name: str, address: str, department: str, position: str, salary: str) -> bool:
     try:
         int_id = int(emp_id)
