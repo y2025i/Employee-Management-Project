@@ -52,7 +52,7 @@ class EmployeeAppUI:
 
                     ui.label('Employee Details').classes('text-2xl font-bold mb-3 text-gray-800')
 
-                    # Zeljko'nun alanları (ID otomatik arttığı için salt-okunur yaptık, güncellemede rehber olacak)
+                    # ID only-read 
                     self.employee_id = ui.input("Employee's ID").classes('w-full mb-2').props('readonly placeholder="Select from table"')
                     self.name = ui.input('Full Name').classes('w-full mb-2')
                     self.address = ui.input('Address').classes('w-full mb-2')
@@ -95,7 +95,7 @@ class EmployeeAppUI:
                         {'name': 'salary', 'label': 'Salary', 'field': 'salary', 'sortable': True},
                     ]
 
-                    # on('selection') dinleyicisi ile tablodan seçim yapıldığında form otomatik dolacak
+                    
                     self.table = ui.table(
                         columns=columns,
                         rows=self.get_callback(),
@@ -103,7 +103,7 @@ class EmployeeAppUI:
                         selection='single'
                     ).classes('w-full bg-white').on('selection', self.handle_table_select)
 
-    # ================= FONKSİYONLAR =================
+    # ================= Functions =================
 
     def update_positions(self, event):
         selected = event.value
@@ -114,7 +114,6 @@ class EmployeeAppUI:
         self.position.value = None
         self.position.update()
 
-    # ADVANCED: Tablodan seçim yapılınca formu doldurma mekanizması
     def handle_table_select(self, e) -> None:
         selected = self.table.selected
         if selected:
@@ -159,7 +158,6 @@ class EmployeeAppUI:
             ui.notify('Employee added successfully!', color='green')
             self.clear_form()
 
-    # ADVANCED: Seçilen Personeli Güncelleme Tetikleyicisi
     def handle_update(self):
         if not self.employee_id.value:
             ui.notify('Please select an employee from the table to update!', color='warning')
