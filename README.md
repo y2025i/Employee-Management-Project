@@ -1,64 +1,62 @@
-Employee Management System 🏢
-
 # Employee Management System 🏢
 
 ## 📖 Project Overview
-This project is developed for the **Advanced Programming** module (BSc BIT). It is a fully-fledged browser-based web application built using Python, focusing on a robust architecture with a frontend, backend logic, and persistent database storage.
+This project is developed for the **Advanced Programming** module (BSc BIT). It is a fully-fledged browser-based web application built using Python. By moving away from traditional CLI applications, we implemented a robust web architecture with a frontend, backend logic, and persistent database storage.
 
-We have chosen to create a comprehensive Employee Management System that allows HR or administrative staff to manage employee records seamlessly from their web browser.
+We have created a comprehensive Employee Management System that allows administrative staff to manage employee records seamlessly from their web browser, featuring real-time statistics, dynamic filtering, and a modern UI.
 
 ## 🎯 Project Goals and Justification
-The main goal of this project is to apply object-oriented programming concepts in a web environment. By migrating traditional desktop GUI applications to a modern browser-based architecture using **NiceGUI**, we aim to demonstrate our understanding of client-server separation, application state management, and database persistence via ORMs.
+The main goal of this project is to apply advanced Object-Oriented Programming (OOP) concepts and Design Patterns in a web environment. 
+By utilizing **NiceGUI**, we demonstrate our understanding of client-server separation, browser session isolation, and database persistence via modern ORMs.
 
-## 🏗️ Software Architecture
-Following the module's requirements, our application is structured into the required layers:
+## 🏗️ Software Architecture & Design Patterns
+Following the module's requirements and best practices, our application strictly follows the **MVC (Model-View-Controller)** design pattern:
 
-### 1. Presentation Layer (Client-Side View)
+### 1. View (Presentation Layer - `gui.py`)
 - The browser acts as a thin client.
-- The UI components are rendered using a generic engine based on Vue.js and Quasar.
-- It contains no business logic or persistent application state.
+- Built using **NiceGUI** (based on Vue.js and Quasar) and styled with **Tailwind CSS**.
+- Contains no direct database logic. It dynamically reacts to user inputs (e.g., dependent comboboxes for Department/Position).
 
-### 2. Application Logic (Server-Side Frontend & Backend)
-- Built using **NiceGUI** (`https://nicegui.io`), allowing us to run the Python app in the browser.
-- UI components (e.g., `ui.button`, `ui.input`) are instantiated as Python objects on the server.
-- The state of these objects (values, visibility) resides on the server.
-- Object-oriented programming principles are used to organize business logic into modular, reusable, and self-contained units.
+### 2. Controller (Application Logic - `main.py`)
+- Acts as the bridge between the View and the Model.
+- Implements **Browser Tab Isolation** using NiceGUI's `@ui.page('/')` decorator, ensuring that multiple users/tabs have independent UI states.
 
-### 3. Persistence Layer (Database)
+### 3. Model (Persistence Layer - `database.py`)
 - **Database:** SQLite
-- We interact with the physical data store using an **Object-Relational Mapper (ORM)**, completely avoiding direct SQL statements to ensure code security and maintainability.
+- **ORM:** We use **SQLModel** (SQLAlchemy + Pydantic) to interact with the database, strictly avoiding raw SQL queries.
+- **Design Pattern:** The database connection utilizes the **Singleton Pattern** (`DatabaseConnection`) to ensure only one database engine pool is created across the application.
+
+## ✨ Advanced Features
+- **Live Statistics Dashboard:** Real-time calculation of Total Employees, Average Salary, and Top Department.
+- **Dynamic Dependent Comboboxes:** The "Position" dropdown automatically updates based on the selected "Department".
+- **Live Search & Filtering:** Instant table filtering by Name, Department, Position, or Address.
+- **Smart Form Auto-Fill:** Selecting an employee from the table automatically populates the form for easy updating or deletion.
+- **Auto-Incrementing IDs:** IDs are handled automatically by the database to ensure data integrity.
+- **Auto-Formatting:** Inputs like employee names are automatically formatted (Title Case) before saving.
 
 ## 👤 User Stories & Use Cases
 - **As an Admin**, I want to add new employees so that the company records stay up to date.
-- **As an Admin**, I want to update existing employee titles or salaries to reflect promotions.
-- **As an Admin**, I want to search for specific employees by ID or name to quickly find their information.
-- **As an Admin**, I want to delete former employees from the active database.
-- **Use Case 1 (Add Employee):** Admin enters ID, Name, Title, Salary, and Address. The system validates the inputs and saves the new object via ORM to the SQLite database.
-- **Use Case 2 (Display All):** The system fetches all employee objects from the database via ORM and dynamically generates a table view on the client-side browser.
+- **As an Admin**, I want to update existing employee details (e.g., salary, department) to reflect promotions.
+- **As an Admin**, I want to search for specific employees dynamically to quickly find their information.
+- **As an Admin**, I want to see real-time company statistics (Average Salary, etc.) to monitor company metrics.
+- **As an Admin**, I want to securely delete former employees from the active database by simply selecting them from the table.
 
 ## 📦 Libraries and Technologies
 - **Python 3.x**
-- **NiceGUI:** For server-side UI component generation.
-- **SQLAlchemy (or chosen ORM):** For database interactions.
-- **SQLite:** As the persistent database.
+- **NiceGUI:** For server-side UI component generation and routing.
+- **SQLModel:** As the modern Object-Relational Mapper (ORM).
+- **SQLite:** As the persistent relational database.
 
 ## 👥 Work Distribution and Contribution
 *Note: Contribution is actively tracked via GitHub activity (commits, pull requests, and issue tracking).*
 
-1. Zeljko Prelic - Application Logic & UI Components:** Responsible for building the NiceGUI interface, organizing the server-side Python objects, and connecting frontend actions to backend logic.
-2. Aykut Gül - Persistence Layer & ORM:** Responsible for setting up the SQLite database, defining data models, and implementing ORM queries (SQLAlchemy) to replace raw SQL.
-3. Yücel Isbaran - Architecture & Integration:** Responsible for ensuring the strict separation between the Presentation Layer and Application Logic, handling project documentation, and integrating the ORM with the UI components.
+1. **Zeljko Prelic - View Layer & UI Components:** Responsible for building the initial NiceGUI interface layout, defining the Tailwind CSS styling, and setting up the visual components (forms, tables, buttons).
+2. **Yücel Isbaran - Model Layer & Basic Operations:** Responsible for designing the initial database schema, creating the base CRUD operations, and setting up the foundational SQLite logic.
+3. **Aykut Gül - Controller Layer, Integration & Advanced Features:** Acted as the project integrator. Refactored the database to **SQLModel**, implemented the **MVC & Singleton** architectures, established browser session isolation (`@ui.page`), and added advanced features (Live Search, Stats Dashboard, Dynamic Comboboxes, and Update functionality).
 
 ## 🚀 Installation and Run Instructions
 1. Clone the repository: `git clone [repository-url]`
 2. Navigate to the project folder.
-3. Install required libraries: `pip install nicegui sqlalchemy`
-4. Run the main file: `python main.py`
-5. The application will automatically open in your default web browser (usually at `http://localhost:8080`).
-
-## 📅 Milestones & Deadlines
-- **Final Submission:** May 24, 2026, at 11:55 PM (Moodle Upload)
-- **Final Presentation:** Includes live demo, source code explanation, and QA session.
-
-📝 License
-This project is created by Yücel Isbaran, Aykut Gül and Zeljko Prelic
+3. Install required libraries: 
+   ```bash
+   pip install nicegui sqlmodel
